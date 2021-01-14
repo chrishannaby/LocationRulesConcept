@@ -91,7 +91,7 @@
 
 <script>
 import { useMachine } from "@xstate/vue";
-import { productMachine } from "../productMachine";
+import { productMachine } from "./productMachine";
 import { ref, computed } from "@vue/composition-api";
 
 export default {
