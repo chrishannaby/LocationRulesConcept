@@ -92,30 +92,33 @@
 <script>
 import { useMachine } from "@xstate/vue";
 import { productMachine } from "./productMachine";
-import { ref, computed, watch } from "@vue/composition-api";
-import { useLocalStorage } from "@vueuse/core";
+import { ref, computed, inject } from "@vue/composition-api";
 
 export default {
-  props: ["product", "storageKey"],
+  props: ["product"],
   setup(props, context) {
-    const persistedState = useLocalStorage(props.storageKey, "");
+    const tryMakeAssociation = inject("tryMakeAssociation");
+    const tryDisassociate = inject("tryDisassociate");
+
     const options = {
       devTools: true,
       context: {
         name: props.product,
       },
+      services: {
+        tryMakeAssociation: (xContext, event) =>
+          tryMakeAssociation(event.tagId, xContext.name),
+      },
       actions: {
+        tryDisassociate: (xContext) => {
+          tryDisassociate(xContext.name);
+        },
         cleanupInstance: () => {
           context.emit("delete-instance");
         },
       },
     };
-    if (persistedState.value) options.state = JSON.parse(persistedState.value);
     const { state, send } = useMachine(productMachine, options);
-    watch(state, (newState) => {
-      console.log({ newState });
-      persistedState.value = JSON.stringify(newState);
-    });
 
     const tagIdInput = ref("");
     const re = /^[A-Fa-f0-9]{2}$/;

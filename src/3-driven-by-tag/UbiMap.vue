@@ -5,7 +5,6 @@
     viewBox="0 0 1000 1000"
     @click="handleClick"
   >
-    <rect width="100%" height="100%" fill="red" />
     <ubi-tag
       v-for="(p, id) in tagLocations"
       :key="id"
@@ -22,7 +21,7 @@
 import UbiTag from "./UbiTag.vue";
 
 export default {
-  props: ['tagLocations', 'selectedProduct'],
+  props: ["tagLocations", "selectedProduct"],
   components: {
     UbiTag,
   },
@@ -44,9 +43,9 @@ export default {
         y: svgP.y,
       };
 
-      this.$emit('tag-event', tagEvent)
+      this.$emit("tag-event", tagEvent);
     },
-  }
+  },
 };
 </script>
 

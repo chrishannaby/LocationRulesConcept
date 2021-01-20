@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col bg-gray-200">
-    <div class="py-6 sm:px-6">
+  <div class="flex-grow flex flex-col md:flex-row bg-gray-200">
+    <div class="py-6 sm:px-6 md:flex-grow">
       <div
         class="px-6 sm:px-0 pb-5 border-b border-gray-300 sm:flex sm:items-center sm:justify-between"
       >
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <ul class="py-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="py-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
         <product-instance
           class="ring-4 ring-opacity-70 ring-transparent"
           @click.native="selectedProduct = product"
@@ -59,15 +59,26 @@
         />
       </ul>
     </div>
+    <div
+      class="min-h-1/2 w-full md:w-1/2 order-first md:order-none bg-gray-600"
+    >
+      <ubi-map
+        :selectedProduct="selectedProduct"
+        :tagLocations="tagLocations"
+        @tag-event="handleTagEvent"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import ProductInstance from "./ProductInstance.vue";
+import UbiMap from "./UbiMap.vue";
 
 export default {
   components: {
     ProductInstance,
+    UbiMap,
   },
   provide() {
     return {
@@ -77,7 +88,9 @@ export default {
   },
   data() {
     return {
+      tags: new Set(),
       associations: {},
+      tagLocations: {},
       selectedProduct: "",
       products: [],
       productToAdd: "",
@@ -92,6 +105,12 @@ export default {
     },
   },
   methods: {
+    handleTagEvent(event) {
+      this.$set(this.tagLocations, event.id, {
+        x: event.x,
+        y: event.y,
+      });
+    },
     addProduct() {
       this.products.push(this.productToAdd);
       this.productToAdd = "";

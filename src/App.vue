@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="min-h-screen flex flex-col">
+  <div id="app" class="h-full sm:h-1/2 flex flex-col">
     <nav
-      class="overflow-x-auto px-6 bg-gray-800 flex items-baseline space-x-4 py-3"
+      class="h-16 overflow-x-auto px-6 bg-gray-800 flex items-center space-x-4"
     >
       <a
         href="#"
@@ -18,25 +18,25 @@
         {{ example.name }}
       </a>
     </nav>
-    <component :is="selectedComponent"></component>
-    <iframe ref="xstate" style="height: 30rem"></iframe>
+    <component
+      class="overflow-y-auto"
+      style="height: calc(100% - 4rem)"
+      :is="selectedComponent"
+    ></component>
   </div>
 </template>
 
 <script>
-import { inspect } from "@xstate/inspect";
 import Example1 from "./1-lifecycle/Example1.vue";
-import Example2 from "./2-something/Example2.vue";
+import Example2 from "./2-lifecycle-services/Example2.vue";
+import Example3 from "./3-driven-by-tag/Example3.vue";
 
 export default {
-  mounted() {
-    inspect({
-      iframe: this.$refs.xstate,
-    });
-  },
+  mounted() {},
   components: {
     Example1,
     Example2,
+    Example3,
   },
   data() {
     return {
@@ -49,6 +49,10 @@ export default {
         {
           name: "Example 2",
           component: "example-2",
+        },
+        {
+          name: "Example 3",
+          component: "example-3",
         },
       ],
     };

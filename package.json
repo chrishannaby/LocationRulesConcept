@@ -10,8 +10,10 @@
   "dependencies": {
     "@vue/cli-plugin-babel": "4.5.4",
     "@vue/composition-api": "1.0.0-beta.11",
+    "@vueuse/core": "^4.0.8",
     "@xstate/inspect": "^0.1.0",
     "@xstate/vue": "0.3.0",
+    "uuid": "^8.3.2",
     "vue": "^2.6.11",
     "xstate": "4.13.0"
   },

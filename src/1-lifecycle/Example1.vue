@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 sm:px-6 w-full flex-grow bg-gray-200">
+  <div class="py-6 sm:px-6 w-full bg-gray-200">
     <div
       class="px-6 sm:px-0 pb-5 border-b border-gray-300 sm:flex sm:items-center sm:justify-between"
     >
@@ -51,41 +51,58 @@
         v-for="(product, idx) in products"
         :key="product"
         :product="product"
-        @delete-instance="deleteProduct(idx)"
+        :storageKey="getStorageKey(product)"
+        @delete-instance="deleteProduct(idx, product)"
       />
     </ul>
   </div>
 </template>
 
 <script>
+import { useLocalStorage } from "@vueuse/core";
 import ProductInstance from "./ProductInstance.vue";
+import { ref, computed } from "@vue/composition-api";
+const name = "example-1";
 
 export default {
+  name,
   components: {
     ProductInstance,
   },
-  data() {
-    return {
-      products: [],
-      productToAdd: "",
+  setup() {
+    const productToAdd = ref("");
+    const products = useLocalStorage(`${name}-products`, []);
+
+    const getStorageKey = (product) => {
+      return `${name}-product-${product}`;
     };
-  },
-  computed: {
-    isValidId() {
+
+    const addProduct = () => {
+      products.value.push(productToAdd.value);
+      productToAdd.value = "";
+    };
+
+    const deleteProduct = (index, product) => {
+      products.value.splice(index, 1);
+      const storageKey = getStorageKey(product);
+      localStorage.removeItem(storageKey);
+    };
+
+    const isValidId = computed(() => {
       return (
-        this.productToAdd.length > 0 &&
-        !this.products.includes(this.productToAdd)
+        productToAdd.value.length > 0 &&
+        !products.value.includes(productToAdd.value)
       );
-    },
-  },
-  methods: {
-    addProduct() {
-      this.products.push(this.productToAdd);
-      this.productToAdd = "";
-    },
-    deleteProduct(index) {
-      this.products.splice(index, 1);
-    },
+    });
+
+    return {
+      productToAdd,
+      products,
+      addProduct,
+      deleteProduct,
+      isValidId,
+      getStorageKey,
+    };
   },
 };
 </script>
