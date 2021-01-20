@@ -91,7 +91,6 @@
 
 <script>
 import { useMachine } from "@xstate/vue";
-import { assign } from "xstate";
 import { productMachine } from "./productMachine";
 import { ref, computed, inject } from "@vue/composition-api";
 
@@ -114,7 +113,7 @@ export default {
         tryDisassociate: (xContext) => {
           tryDisassociate(xContext.name);
         },
-        cleanupInstance: (xContext) => {
+        cleanupInstance: () => {
           context.emit("delete-instance");
         },
       },

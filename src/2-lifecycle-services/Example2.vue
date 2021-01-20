@@ -120,7 +120,7 @@ export default {
       return new Promise((resolve, reject) => {
         console.log({ tagId, objectId });
         if (
-          this.associations.hasOwnProperty(tagId) ||
+          Object.prototype.hasOwnProperty.call(this.associations, tagId) ||
           (this.associations.values &&
             this.associations.values.includes(objectId))
         ) {
@@ -146,6 +146,6 @@ export default {
 
 <style scoped>
 .product:hover {
-  --tw-ring-color: rgba(79, 70, 229, var(--tw-ring-opacity)); 
+  --tw-ring-color: rgba(79, 70, 229, var(--tw-ring-opacity));
 }
 </style>

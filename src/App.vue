@@ -19,14 +19,21 @@
       </a>
     </nav>
     <component :is="selectedComponent"></component>
+    <iframe ref="xstate" style="height: 30rem"></iframe>
   </div>
 </template>
 
 <script>
+import { inspect } from "@xstate/inspect";
 import Example1 from "./1-lifecycle/Example1.vue";
 import Example2 from "./2-something/Example2.vue";
 
 export default {
+  mounted() {
+    inspect({
+      iframe: this.$refs.xstate,
+    });
+  },
   components: {
     Example1,
     Example2,
