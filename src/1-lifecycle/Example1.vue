@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="py-6 sm:px-6 w-full flex-grow bg-gray-200">
+  <div class="py-6 sm:px-6 w-full flex-grow bg-gray-200">
     <div
       class="px-6 sm:px-0 pb-5 border-b border-gray-300 sm:flex sm:items-center sm:justify-between"
     >

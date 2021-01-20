@@ -1,6 +1,8 @@
 <template>
-  <div class="min-h-screen flex flex-col">
-    <nav class="px-6 bg-gray-800 flex items-baseline space-x-4 py-3">
+  <div id="app" class="min-h-screen flex flex-col">
+    <nav
+      class="overflow-x-auto px-6 bg-gray-800 flex items-baseline space-x-4 py-3"
+    >
       <a
         href="#"
         @click="selectedIndex = idx"
@@ -9,7 +11,7 @@
             ? 'bg-indigo-700 text-white'
             : 'text-gray-300 hover:bg-gray-700 hover:text-white'
         "
-        class="px-3 py-2 rounded-md text-sm font-medium"
+        class="flex-shrink-0 px-3 py-2 rounded-md text-sm font-medium"
         v-for="(example, idx) in examples"
         :key="idx"
       >
@@ -34,11 +36,11 @@ export default {
       selectedIndex: 0,
       examples: [
         {
-          name: "1 - Lifecycle",
+          name: "Example 1",
           component: "example-1",
         },
         {
-          name: "2 - Something Else",
+          name: "Example 2",
           component: "example-2",
         },
       ],
